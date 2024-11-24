@@ -1,0 +1,22 @@
+- name: Update APT package index
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Install C compiler
+  become: yes
+  apt:
+    name: gcc
+    state: present
+
+- name: Install C++ compiler
+  become: yes
+  apt:
+    name: g++
+    state: present
+
+- name: Install Clang compiler
+  become: yes
+  apt:
+    name: clang
+    state: present

@@ -1,0 +1,38 @@
+- name: Update APT package index
+  apt:
+    update_cache: yes
+
+- name: Upgrade all packages
+  become: yes
+  apt:
+    upgrade: dist
+
+- name: Install vim
+  become: yes
+  apt:
+    name: vim
+    state: present
+
+- name: Install git
+  become: yes
+  apt:
+    name: git
+    state: present
+
+- name: Install wget
+  become: yes
+  apt:
+    name: wget
+    state: present
+
+- name: Install curl
+  become: yes
+  apt:
+    name: curl
+    state: present
+
+- name: Clean up unused packages
+  become: yes
+  apt:
+    autoclean: yes
+    autoremove: yes
