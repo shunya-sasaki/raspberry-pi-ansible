@@ -1,0 +1,55 @@
+- name: Update APT package index
+  become: yes
+  apt:
+    update_cache: yes
+
+# - name: Install build dependencies for Python 3
+#   become: yes
+#   ansible.builtin.apt:
+#     pkg: python3
+#     state: build-dep
+#   become: true
+
+- name: Install optional build dependencies for Python 3
+  become: yes
+  apt:
+    name:
+      - build-essential
+      - gdb
+      - lcov
+      - pkg-config
+      - libbz2-dev
+      - libffi-dev
+      - libgdbm-dev
+      - libgdbm-compat-dev
+      - liblzma-dev
+      - libncurses5-dev
+      - libreadline6-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - lzma
+      - lzma-dev
+      - tk-dev
+      - uuid-dev
+      - zlib1g-dev
+
+- name: Download Python source file
+  become: yes
+  get_url:
+    url: https://www.python.org/ftp/python/{{ python_version }}/Python-3.12.7.tar.xz
+    dest: /tmp/Python-{{ python_version }}.tgz
+
+- name: Extract Python source file
+  become: yes
+  unarchive:
+    src: /tmp/Python-{{ python_version }}.tgz
+    dest: /tmp
+    remote_src: yes
+
+- name: Build Python from source and install
+  become: yes
+  shell: |
+    cd /tmp/Python-{{ python_version }} && \
+    ./configure --prefix=/opt/Python/Python-{{ python_version }} --enable-optimizations && \
+    make -j$(nproc) && \
+    make install

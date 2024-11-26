@@ -20,3 +20,15 @@
   apt:
     name: clang
     state: present
+
+- name: Install CMake
+  become: yes
+  apt:
+    name: cmake
+    state: present
+
+- name: Install Ninja
+  become: yes
+  apt:
+    name: ninja-build
+    state: present
